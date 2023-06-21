@@ -12,9 +12,9 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.util.RandomSource;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class MaidFollowOwnerTask extends Behavior<EntityMaid> {
     private static final int MAX_TELEPORT_ATTEMPTS_TIMES = 10;
@@ -83,7 +83,7 @@ public class MaidFollowOwnerTask extends Behavior<EntityMaid> {
         return false;
     }
 
-    private int randomIntInclusive(Random random, int min, int max) {
+    private int randomIntInclusive(RandomSource random, int min, int max) {
         return random.nextInt(max - min + 1) + min;
     }
 

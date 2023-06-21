@@ -3,9 +3,11 @@ package com.github.tartaricacid.touhoulittlemaid.item.bauble;
 import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import com.github.tartaricacid.touhoulittlemaid.api.ILittleMaid;
 import com.github.tartaricacid.touhoulittlemaid.api.bauble.IMaidBauble;
+import com.github.tartaricacid.touhoulittlemaid.command.RootCommand;
 import com.github.tartaricacid.touhoulittlemaid.init.InitItems;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -14,8 +16,12 @@ import net.minecraftforge.registries.RegistryObject;
 import javax.annotation.Nullable;
 import java.util.Map;
 
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+@Mod.EventBusSubscriber
 public final class BaubleManager {
-    private static Map<RegistryObject<Item>, IMaidBauble> BAUBLES;
+    private static Map<Item, IMaidBauble> BAUBLES;
 
     private BaubleManager() {
         BAUBLES = Maps.newHashMap();
@@ -42,21 +48,28 @@ public final class BaubleManager {
     }
 
     @Nullable
-    public static IMaidBauble getBauble(RegistryObject<Item> item) {
+    public static IMaidBauble getBauble(Item item) {
         return BAUBLES.get(item);
     }
 
     @Nullable
     public static IMaidBauble getBauble(ItemStack stack) {
-        Item item = stack.getItem();
-        return getBauble(RegistryObject.of(item.getRegistryName(), item::getRegistryType));
+        return getBauble(stack.getItem());
     }
 
     public void bind(RegistryObject<Item> item, IMaidBauble bauble) {
-        BAUBLES.put(item, bauble);
+        BAUBLES.put(item.get(), bauble);
     }
 
     public void bind(Item item, IMaidBauble bauble) {
-        BAUBLES.put(RegistryObject.of(item.getRegistryName(), item::getRegistryType), bauble);
+        BAUBLES.put(item, bauble);
+    }
+
+
+    
+    @SubscribeEvent
+    public static void initBaubles(RegisterCommandsEvent event) {
+        TouhouLittleMaid.LOGGER.info("init baubles");
+        init();
     }
 }

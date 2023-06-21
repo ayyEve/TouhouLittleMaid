@@ -15,7 +15,8 @@ public final class BiomeCacheUtil {
         try {
             return BIOME_CACHE.get(entity, () -> entity.level.getBiome(entity.blockPosition()).value());
         } catch (ExecutionException ignore) {
+            // entity.getLevel().getBiome().get
             return entity.level.getBiome(entity.blockPosition()).value();
-        }
+        } 
     }
 }

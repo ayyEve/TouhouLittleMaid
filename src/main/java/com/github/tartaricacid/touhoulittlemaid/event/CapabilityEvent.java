@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -37,7 +37,7 @@ public final class CapabilityEvent {
     @SubscribeEvent
     public static void onPlayerCloned(PlayerEvent.Clone event) {
         LazyOptional<PowerCapability> oldPowerCap = getPowerCap(event.getOriginal());
-        LazyOptional<PowerCapability> newPowerCap = getPowerCap(event.getPlayer());
+        LazyOptional<PowerCapability> newPowerCap = getPowerCap(event.getEntity());
         newPowerCap.ifPresent((newPower) -> oldPowerCap.ifPresent((oldPower) -> {
             if (event.isWasDeath()) {
                 newPower.set(oldPower.get() - MiscConfig.PLAYER_DEATH_LOSS_POWER_POINT.get().floatValue());
@@ -47,12 +47,12 @@ public final class CapabilityEvent {
         }));
 
         LazyOptional<MaidNumCapability> oldMaidNumCap = getMaidNumCap(event.getOriginal());
-        LazyOptional<MaidNumCapability> newMaidNumCap = getMaidNumCap(event.getPlayer());
+        LazyOptional<MaidNumCapability> newMaidNumCap = getMaidNumCap(event.getEntity());
         newMaidNumCap.ifPresent((newMaidNum) -> oldMaidNumCap.ifPresent((oldMaidNum) -> newMaidNum.set(oldMaidNum.get())));
     }
 
     @SubscribeEvent
-    public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
+    public static void onEntityJoinWorld(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             getPowerCap(player).ifPresent(PowerCapability::markDirty);

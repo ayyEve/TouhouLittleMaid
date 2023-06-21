@@ -5,6 +5,8 @@ import net.minecraft.world.item.ItemStack;
 
 import static com.github.tartaricacid.touhoulittlemaid.item.MaidGroup.MAIN_TAB;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class ItemNormalBauble extends Item {
     public ItemNormalBauble() {
         super((new Properties()).tab(MAIN_TAB).stacksTo(1));

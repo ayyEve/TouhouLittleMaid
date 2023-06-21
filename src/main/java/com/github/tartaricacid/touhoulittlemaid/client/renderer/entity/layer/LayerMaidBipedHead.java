@@ -59,7 +59,13 @@ public class LayerMaidBipedHead extends RenderLayer<EntityMaid, BedrockModel<Ent
                 poseStack.translate(0.0D, -0.25D, 0.0D);
                 poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
                 poseStack.scale(0.625F, -0.625F, -0.625F);
-                Minecraft.getInstance().getItemInHandRenderer().renderItem(maid, head, ItemTransforms.TransformType.HEAD, false, poseStack, bufferIn, packedLightIn);
+
+                
+                var itemRenderer = Minecraft.getInstance().getItemRenderer();
+                var model = itemRenderer.getModel(head, maid.level, maid, 0);
+                itemRenderer.render(head, ItemTransforms.TransformType.HEAD, false, poseStack, bufferIn, packedLightIn, 0, model);
+                
+                // Minecraft.getInstance().getItemInHandRenderer().renderItem(maid, head, ItemTransforms.TransformType.HEAD, false, poseStack, bufferIn, packedLightIn);
             }
             poseStack.popPose();
         }

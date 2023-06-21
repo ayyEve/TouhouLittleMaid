@@ -1,7 +1,7 @@
 package com.github.tartaricacid.touhoulittlemaid.data;
 
 import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
-import com.github.tartaricacid.touhoulittlemaid.init.InitLootModifier;
+// import com.github.tartaricacid.touhoulittlemaid.init.InitLootModifier;
 import com.github.tartaricacid.touhoulittlemaid.loot.AdditionLootModifier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +22,7 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
         ResourceLocation table = new ResourceLocation(TouhouLittleMaid.MOD_ID, "chest/power_point");
         if (chest != null) {
             AdditionLootModifier modifier = new AdditionLootModifier(randomChance, chest, table);
-            this.add("power_point", InitLootModifier.ADDITION.get(), modifier);
+            this.add("power_point", modifier);
         }
     }
 }

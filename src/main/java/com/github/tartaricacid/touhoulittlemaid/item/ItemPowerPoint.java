@@ -13,6 +13,8 @@ import net.minecraft.world.level.Level;
 
 import static com.github.tartaricacid.touhoulittlemaid.item.MaidGroup.MAIN_TAB;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class ItemPowerPoint extends Item {
     public ItemPowerPoint() {
         super((new Properties()).tab(MAIN_TAB));

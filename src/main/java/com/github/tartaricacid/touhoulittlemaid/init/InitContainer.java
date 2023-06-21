@@ -9,7 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public final class InitContainer {
-    public static final DeferredRegister<MenuType<?>> CONTAINER_TYPE = DeferredRegister.create(ForgeRegistries.CONTAINERS, TouhouLittleMaid.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> CONTAINER_TYPE = DeferredRegister.create(ForgeRegistries.MENU_TYPES, TouhouLittleMaid.MOD_ID);
 
     public static final RegistryObject<MenuType<MaidMainContainer>> MAID_MAIN_CONTAINER = CONTAINER_TYPE.register("maid_main_container", () -> MaidMainContainer.TYPE);
     public static final RegistryObject<MenuType<WirelessIOContainer>> WIRELESS_IO_CONTAINER = CONTAINER_TYPE.register("wireless_io_container", () -> WirelessIOContainer.TYPE);

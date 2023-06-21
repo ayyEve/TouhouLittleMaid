@@ -30,7 +30,7 @@ public final class AltarRecipeMaker {
     }
 
     public List<AltarRecipeWrapper> getAltarRecipes() {
-        List<AltarRecipe> altarRecipesMap = recipeManager.getAllRecipesFor(InitRecipes.ALTAR_CRAFTING);
+        List<AltarRecipe> altarRecipesMap = recipeManager.getAllRecipesFor(InitRecipes.ALTAR_CRAFTING.get());
         List<AltarRecipeWrapper> recipes = Lists.newArrayList();
         for (AltarRecipe recipe : altarRecipesMap) {
             ResourceLocation recipeId = recipe.getId();

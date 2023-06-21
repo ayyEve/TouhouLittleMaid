@@ -23,6 +23,8 @@ import net.minecraft.world.item.UseAnim;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import com.github.tartaricacid.touhoulittlemaid.api.task.IFeedTask.Priority;
+
 public class TaskFeedOwner implements IFeedTask {
     public static final ResourceLocation UID = new ResourceLocation(TouhouLittleMaid.MOD_ID, "feed");
 

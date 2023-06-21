@@ -3,6 +3,7 @@ package com.github.tartaricacid.touhoulittlemaid.block;
 import com.github.tartaricacid.touhoulittlemaid.capability.PowerCapability;
 import com.github.tartaricacid.touhoulittlemaid.capability.PowerCapabilityProvider;
 import com.github.tartaricacid.touhoulittlemaid.crafting.AltarRecipe;
+import com.github.tartaricacid.touhoulittlemaid.init.InitItems;
 import com.github.tartaricacid.touhoulittlemaid.init.InitRecipes;
 import com.github.tartaricacid.touhoulittlemaid.init.InitSounds;
 import com.github.tartaricacid.touhoulittlemaid.inventory.AltarRecipeInventory;
@@ -16,7 +17,7 @@ import net.minecraft.client.particle.TerrainParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -42,8 +43,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.IBlockRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientBlockExtensions;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraft.util.RandomSource;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -119,8 +121,8 @@ public class BlockAltar extends Block implements EntityBlock {
 
 
     @Override
-    public void initializeClient(Consumer<IBlockRenderProperties> consumer) {
-        consumer.accept(new IBlockRenderProperties() {
+    public void initializeClient(Consumer<IClientBlockExtensions> consumer) {
+        consumer.accept(new IClientBlockExtensions() {
             @Override
             public boolean addHitEffects(BlockState state, Level world, HitResult target, ParticleEngine manager) {
                 if (target instanceof BlockHitResult && world instanceof ClientLevel) {
@@ -240,7 +242,7 @@ public class BlockAltar extends Block implements EntityBlock {
             return;
         }
         playerIn.getCapability(PowerCapabilityProvider.POWER_CAP, null)
-                .ifPresent(power -> world.getRecipeManager().getRecipeFor(InitRecipes.ALTAR_CRAFTING, inv, world)
+                .ifPresent(power -> world.getRecipeManager().getRecipeFor(InitRecipes.ALTAR_CRAFTING.get(), inv, world)
                         .ifPresent(recipe -> spawnResultEntity(world, playerIn, power, recipe, inv, altar)));
     }
 
@@ -265,7 +267,7 @@ public class BlockAltar extends Block implements EntityBlock {
             world.playSound(null, centrePos, InitSounds.ALTAR_CRAFT.get(), SoundSource.VOICE, 1.0f, 1.0f);
         } else {
             if (!world.isClientSide) {
-                playerIn.sendMessage(new TranslatableComponent("message.touhou_little_maid.altar.not_enough_power"), Util.NIL_UUID);
+                playerIn.displayClientMessage(Component.translatable("message.touhou_little_maid.altar.not_enough_power"), false);
             }
         }
     }
@@ -294,21 +296,22 @@ public class BlockAltar extends Block implements EntityBlock {
     }
 
     private void spawnParticleInCentre(Level world, BlockPos centrePos) {
+        RandomSource random = world.getRandom();
         int width = 1;
         int height = 1;
         for (int i = 0; i < 5; ++i) {
-            double xSpeed = RANDOM.nextGaussian() * 0.02;
-            double ySpeed = RANDOM.nextGaussian() * 0.02;
-            double zSpeed = RANDOM.nextGaussian() * 0.02;
+            double xSpeed = random.nextGaussian() * 0.02;
+            double ySpeed = random.nextGaussian() * 0.02;
+            double zSpeed = random.nextGaussian() * 0.02;
             world.addParticle(ParticleTypes.CLOUD,
-                    centrePos.getX() + RANDOM.nextFloat() * width * 2 - width - xSpeed * 10,
-                    centrePos.getY() + RANDOM.nextFloat() * height - ySpeed * 10,
-                    centrePos.getZ() + RANDOM.nextFloat() * width * 2 - width - zSpeed * 10,
+                    centrePos.getX() + random.nextFloat() * width * 2 - width - xSpeed * 10,
+                    centrePos.getY() + random.nextFloat() * height - ySpeed * 10,
+                    centrePos.getZ() + random.nextFloat() * width * 2 - width - zSpeed * 10,
                     xSpeed, ySpeed, zSpeed);
             world.addParticle(ParticleTypes.SMOKE,
-                    centrePos.getX() + RANDOM.nextFloat() * width * 2 - width - xSpeed * 10,
-                    centrePos.getY() + RANDOM.nextFloat() * height - ySpeed * 10,
-                    centrePos.getZ() + RANDOM.nextFloat() * width * 2 - width - zSpeed * 10,
+                    centrePos.getX() + random.nextFloat() * width * 2 - width - xSpeed * 10,
+                    centrePos.getY() + random.nextFloat() * height - ySpeed * 10,
+                    centrePos.getZ() + random.nextFloat() * width * 2 - width - zSpeed * 10,
                     xSpeed, ySpeed, zSpeed);
         }
     }

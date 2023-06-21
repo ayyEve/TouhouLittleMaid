@@ -39,8 +39,6 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -315,9 +313,9 @@ public class EntityMaid extends TamableAnimal implements MenuProvider, CrossbowA
                 }
             } else {
                 if (player instanceof ServerPlayer) {
-                    TranslatableComponent msg = new TranslatableComponent("message.touhou_little_maid.owner_maid_num.can_not_add",
+                    Component msg = Component.translatable("message.touhou_little_maid.owner_maid_num.can_not_add",
                             cap.get(), cap.getMaxNum());
-                    ((ServerPlayer) player).sendMessage(msg, ChatType.GAME_INFO, Util.NIL_UUID);
+                    ((ServerPlayer) player).displayClientMessage(msg, false);
                 }
             }
             return InteractionResult.PASS;
@@ -792,7 +790,7 @@ public class EntityMaid extends TamableAnimal implements MenuProvider, CrossbowA
     private boolean openMaidGui(Player player) {
         if (player instanceof ServerPlayer && !this.isSleeping()) {
             this.navigation.stop();
-            NetworkHooks.openGui((ServerPlayer) player, this, (buffer) -> buffer.writeInt(getId()));
+            NetworkHooks.openScreen((ServerPlayer) player, this, (buffer) -> buffer.writeInt(getId()));
         }
         return true;
     }
@@ -827,14 +825,14 @@ public class EntityMaid extends TamableAnimal implements MenuProvider, CrossbowA
     }
 
     @Override
-    protected int getExperienceReward(Player player) {
+    public int getExperienceReward() {
         return this.getExperience();
     }
 
     @Override
     protected Component getTypeName() {
         Optional<MaidModelInfo> info = ServerCustomPackLoader.SERVER_MAID_MODELS.getInfo(getModelId());
-        return info.map(maidModelInfo -> ParseI18n.parse(maidModelInfo.getName())).orElseGet(() -> new TextComponent(getType().getDescriptionId()));
+        return info.map(maidModelInfo -> ParseI18n.parse(maidModelInfo.getName())).orElseGet(() -> Component.literal(getType().getDescriptionId()));
     }
 
     @Override

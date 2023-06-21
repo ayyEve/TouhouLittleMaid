@@ -16,7 +16,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
@@ -38,6 +38,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static com.github.tartaricacid.touhoulittlemaid.item.MaidGroup.MAIN_TAB;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemSmartSlab extends Item {
     private static final String MAID_INFO = "MaidInfo";
@@ -66,7 +68,7 @@ public class ItemSmartSlab extends Item {
 
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (this.allowdedIn(group) && this.type == Type.INIT) {
+        if (this.allowedIn(group) && this.type == Type.INIT) {
             items.add(new ItemStack(this));
         }
     }
@@ -99,7 +101,7 @@ public class ItemSmartSlab extends Item {
             }
         } else {
             if (worldIn.isClientSide) {
-                player.sendMessage(new TranslatableComponent("message.touhou_little_maid.photo.not_suitable_for_place_maid"), Util.NIL_UUID);
+                player.displayClientMessage(Component.translatable("message.touhou_little_maid.photo.not_suitable_for_place_maid"), false);
             }
         }
         return super.useOn(context);
@@ -148,8 +150,8 @@ public class ItemSmartSlab extends Item {
                 return InteractionResult.sidedSuccess(worldIn.isClientSide);
             } else {
                 if (worldIn.isClientSide) {
-                    player.sendMessage(new TranslatableComponent("message.touhou_little_maid.owner_maid_num.can_not_add",
-                            cap.get(), cap.getMaxNum()), Util.NIL_UUID);
+                    player.displayClientMessage(Component.translatable("message.touhou_little_maid.owner_maid_num.can_not_add",
+                            cap.get(), cap.getMaxNum()), false);
                 }
                 return super.useOn(context);
             }
@@ -165,7 +167,7 @@ public class ItemSmartSlab extends Item {
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (this.type == Type.INIT) {
-            TranslatableComponent text = new TranslatableComponent("tooltips.touhou_little_maid.smart_slab.maid_name",
+            MutableComponent text = Component.translatable("tooltips.touhou_little_maid.smart_slab.maid_name",
                     I18n.get("tooltips.touhou_little_maid.smart_slab.maid_name.unknown"));
             tooltip.add(text.withStyle(ChatFormatting.GRAY));
         }
@@ -176,14 +178,14 @@ public class ItemSmartSlab extends Item {
                 if (StringUtils.isNotBlank(modelId)) {
                     CustomPackLoader.MAID_MODELS.getInfo(modelId).ifPresent(info -> {
                         String modelNameKey = ParseI18n.getI18nKey(info.getName());
-                        TranslatableComponent text = new TranslatableComponent("tooltips.touhou_little_maid.smart_slab.maid_name",
+                        MutableComponent text = Component.translatable("tooltips.touhou_little_maid.smart_slab.maid_name",
                                 I18n.get(modelNameKey));
                         tooltip.add(text.withStyle(ChatFormatting.GRAY));
                     });
                 }
             }
         }
-        tooltip.add(new TranslatableComponent("tooltips.touhou_little_maid.smart_slab.desc").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltips.touhou_little_maid.smart_slab.desc").withStyle(ChatFormatting.GRAY));
     }
 
     public enum Type {

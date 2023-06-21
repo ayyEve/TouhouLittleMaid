@@ -16,9 +16,9 @@ import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.IForgeShearable;
+import net.minecraft.util.RandomSource;
 
 import java.util.List;
-import java.util.Random;
 
 public class MaidShearTask extends MaidCheckRateTask {
     private static final int MAX_DELAY_TIME = 12;
@@ -57,7 +57,7 @@ public class MaidShearTask extends MaidCheckRateTask {
                 });
 
         if (shearableEntity != null && shearableEntity.closerThan(maid, 2)) {
-            Random rand = maid.getRandom();
+            RandomSource rand = maid.getRandom();
             int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, mainHandItem);
             List<ItemStack> drops = ((IForgeShearable) shearableEntity).onSheared(null, mainHandItem,
                     maid.level, shearableEntity.blockPosition(), level);

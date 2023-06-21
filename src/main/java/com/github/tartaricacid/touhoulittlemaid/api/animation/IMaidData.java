@@ -148,12 +148,12 @@ public interface IMaidData extends IEntityData {
      */
     boolean inRain();
 
-    /**
-     * Get maid's biome register name
-     *
-     * @return String
-     */
-    String getAtBiome();
+    // /**
+    //  * Get maid's biome register name
+    //  *
+    //  * @return String
+    //  */
+    // String getAtBiome();
 
     /**
      * Whether the maid is swinging left arms

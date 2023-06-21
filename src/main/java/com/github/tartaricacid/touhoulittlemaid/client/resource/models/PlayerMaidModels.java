@@ -85,7 +85,7 @@ public final class PlayerMaidModels {
                     return PLAYER_MAID_MODEL_SLIM;
                 }
             } else {
-                UUID uuid = Player.createPlayerUUID(newProfile);
+                UUID uuid = UUID.fromString(Player.UUID_TAG); //Player.createPlayerUUID(newProfile);
                 String skinModel = DefaultPlayerSkin.getSkinModelName(uuid);
                 if (SLIM_NAME.equals(skinModel)) {
                     return PLAYER_MAID_MODEL_SLIM;
@@ -128,7 +128,7 @@ public final class PlayerMaidModels {
             if (map.containsKey(MinecraftProfileTexture.Type.SKIN)) {
                 return minecraft.getSkinManager().registerTexture(map.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN);
             } else {
-                UUID uuid = Player.createPlayerUUID(newProfile);
+                UUID uuid = UUID.fromString(Player.UUID_TAG); //Player.createPlayerUUID(newProfile);
                 return DefaultPlayerSkin.getDefaultSkin(uuid);
             }
         }

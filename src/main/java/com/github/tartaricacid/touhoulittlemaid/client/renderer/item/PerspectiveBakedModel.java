@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.util.RandomSource;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,7 +26,7 @@ public class PerspectiveBakedModel implements BakedModel {
     }
 
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, Random rand) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand) {
         return Collections.emptyList();
     }
 
@@ -60,12 +61,13 @@ public class PerspectiveBakedModel implements BakedModel {
         return ItemOverrides.EMPTY;
     }
 
-    @Override
-    public BakedModel handlePerspective(ItemTransforms.TransformType type, PoseStack mat) {
-        if (type == ItemTransforms.TransformType.GUI || type == ItemTransforms.TransformType.FIXED) {
-            return bakedModel2d.handlePerspective(type, mat);
-        } else {
-            return bakedModel3d.handlePerspective(type, mat);
-        }
-    }
+    //TODO: 
+    // @Override
+    // public BakedModel handlePerspective(ItemTransforms.TransformType type, PoseStack mat) {
+    //     if (type == ItemTransforms.TransformType.GUI || type == ItemTransforms.TransformType.FIXED) {
+    //         return bakedModel2d.handlePerspective(type, mat);
+    //     } else {
+    //         return bakedModel3d.handlePerspective(type, mat);
+    //     }
+    // }
 }

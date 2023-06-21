@@ -60,26 +60,26 @@ public class TileEntityAltar extends BlockEntity {
 
     @Override
     public void saveAdditional(CompoundTag compound) {
-        getTileData().putBoolean(IS_RENDER, isRender);
-        getTileData().putBoolean(CAN_PLACE_ITEM, canPlaceItem);
-        getTileData().putInt(STORAGE_STATE_ID, Block.getId(storageState));
-        getTileData().put(STORAGE_ITEM, handler.serializeNBT());
-        getTileData().putString(DIRECTION, direction.getSerializedName());
-        getTileData().put(STORAGE_BLOCK_LIST, blockPosList.serialize());
-        getTileData().put(CAN_PLACE_ITEM_POS_LIST, canPlaceItemPosList.serialize());
+        getPersistentData().putBoolean(IS_RENDER, isRender);
+        getPersistentData().putBoolean(CAN_PLACE_ITEM, canPlaceItem);
+        getPersistentData().putInt(STORAGE_STATE_ID, Block.getId(storageState));
+        getPersistentData().put(STORAGE_ITEM, handler.serializeNBT());
+        getPersistentData().putString(DIRECTION, direction.getSerializedName());
+        getPersistentData().put(STORAGE_BLOCK_LIST, blockPosList.serialize());
+        getPersistentData().put(CAN_PLACE_ITEM_POS_LIST, canPlaceItemPosList.serialize());
         super.saveAdditional(compound);
     }
 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        isRender = getTileData().getBoolean(IS_RENDER);
-        canPlaceItem = getTileData().getBoolean(CAN_PLACE_ITEM);
-        storageState = Block.stateById(getTileData().getInt(STORAGE_STATE_ID));
-        handler.deserializeNBT(getTileData().getCompound(STORAGE_ITEM));
-        direction = Direction.byName(getTileData().getString(DIRECTION));
-        blockPosList.deserialize(getTileData().getList(STORAGE_BLOCK_LIST, Tag.TAG_COMPOUND));
-        canPlaceItemPosList.deserialize(getTileData().getList(CAN_PLACE_ITEM_POS_LIST, Tag.TAG_COMPOUND));
+        isRender = getPersistentData().getBoolean(IS_RENDER);
+        canPlaceItem = getPersistentData().getBoolean(CAN_PLACE_ITEM);
+        storageState = Block.stateById(getPersistentData().getInt(STORAGE_STATE_ID));
+        handler.deserializeNBT(getPersistentData().getCompound(STORAGE_ITEM));
+        direction = Direction.byName(getPersistentData().getString(DIRECTION));
+        blockPosList.deserialize(getPersistentData().getList(STORAGE_BLOCK_LIST, Tag.TAG_COMPOUND));
+        canPlaceItemPosList.deserialize(getPersistentData().getList(CAN_PLACE_ITEM_POS_LIST, Tag.TAG_COMPOUND));
     }
 
     @Override

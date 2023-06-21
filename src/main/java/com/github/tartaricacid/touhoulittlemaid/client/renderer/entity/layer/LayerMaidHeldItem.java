@@ -45,7 +45,13 @@ public class LayerMaidHeldItem extends RenderLayer<EntityMaid, BedrockModel<Enti
                 poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
                 poseStack.translate((isLeft ? -1 : 1) / 16.0, 0.125, -0.525);
             }
-            Minecraft.getInstance().getItemInHandRenderer().renderItem(maid, itemStack, transformTypeIn, isLeft, poseStack, typeBuffer, combinedLightIn);
+
+            
+            var itemRenderer = Minecraft.getInstance().getItemRenderer();
+            var model = itemRenderer.getModel(itemStack, maid.level, maid, 0);
+            itemRenderer.render(itemStack, transformTypeIn, isLeft, poseStack, typeBuffer, combinedLightIn, 0, model);
+            
+            // Minecraft.getInstance().getItemInHandRenderer().renderItem(maid, itemStack, transformTypeIn, isLeft, poseStack, typeBuffer, combinedLightIn);
             poseStack.popPose();
         }
     }

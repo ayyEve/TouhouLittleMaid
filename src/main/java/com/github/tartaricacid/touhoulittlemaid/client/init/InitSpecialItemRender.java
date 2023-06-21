@@ -7,14 +7,16 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ForgeModelBakery;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
+import net.minecraftforge.client.event.ModelEvent.RegisterGeometryLoaders;
+// import net.minecraftforge.client.model.ForgeModelBakery;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Pair;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
 import java.util.Map;
@@ -23,34 +25,36 @@ import java.util.Map;
 public final class InitSpecialItemRender {
     private static final List<Pair<ModelResourceLocation, ModelResourceLocation>> PERSPECTIVE_MODEL_LIST = Lists.newArrayList();
 
-    @SubscribeEvent
-    public static void register(RegistryEvent.Register<Item> event) {
-        addInHandModel(InitItems.HAKUREI_GOHEI.get());
-        addInHandModel(InitItems.EXTINGUISHER.get());
-        addInHandModel(InitItems.CAMERA.get());
-        addInHandModel(InitItems.MAID_BEACON.get());
-    }
+    //TODO: figure this out
+    // @SubscribeEvent
+    // public static void register(RegisterEvent.RegisterHelper<Item> event) {
+    //     addInHandModel(InitItems.HAKUREI_GOHEI);
+    //     addInHandModel(InitItems.EXTINGUISHER);
+    //     addInHandModel(InitItems.CAMERA);
+    //     addInHandModel(InitItems.MAID_BEACON);
+    // }
 
     @SubscribeEvent
-    public static void onBakedModel(ModelBakeEvent event) {
-        Map<ResourceLocation, BakedModel> registry = event.getModelRegistry();
+    public static void onBakedModel(BakingCompleted event) {
+        Map<ResourceLocation, BakedModel> registry = event.getModels();
         for (Pair<ModelResourceLocation, ModelResourceLocation> pair : PERSPECTIVE_MODEL_LIST) {
             PerspectiveBakedModel model = new PerspectiveBakedModel(registry.get(pair.getLeft()), registry.get(pair.getRight()));
             registry.put(pair.getLeft(), model);
         }
     }
 
-    @SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event) {
-        PERSPECTIVE_MODEL_LIST.forEach((pair) -> ForgeModelBakery.addSpecialModel(pair.getRight()));
-    }
+    // @SubscribeEvent
+    // public static void registerModels(RegisterGeometryLoaders event) {
+        
+    //     PERSPECTIVE_MODEL_LIST.forEach((pair) -> ForgeModelBakery.addSpecialModel(pair.getRight()));
+    // }
 
-    public static void addInHandModel(Item item) {
-        ResourceLocation res = item.getRegistryName();
-        if (res != null) {
-            ModelResourceLocation rawName = ForgeModelBakery.getInventoryVariant(res.toString());
-            ModelResourceLocation inHandName = ForgeModelBakery.getInventoryVariant(res.toString() + "_in_hand");
-            PERSPECTIVE_MODEL_LIST.add(Pair.of(rawName, inHandName));
-        }
-    }
+    // public static void addInHandModel(RegistryObject<Item> item) {
+    //     ResourceLocation res = item.getId();
+    //     if (res != null) {
+    //         ModelResourceLocation rawName = ForgeModelBakery.getInventoryVariant(res.toString());
+    //         ModelResourceLocation inHandName = ForgeModelBakery.getInventoryVariant(res.toString() + "_in_hand");
+    //         PERSPECTIVE_MODEL_LIST.add(Pair.of(rawName, inHandName));
+    //     }
+    // }
 }

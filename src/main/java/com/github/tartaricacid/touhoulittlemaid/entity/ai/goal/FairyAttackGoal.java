@@ -9,6 +9,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.ai.goal.Goal.Flag;
+
 public class FairyAttackGoal extends Goal {
     private static final int MAX_WITH_IN_RANGE_TIME = 20;
     private final EntityFairy entityFairy;

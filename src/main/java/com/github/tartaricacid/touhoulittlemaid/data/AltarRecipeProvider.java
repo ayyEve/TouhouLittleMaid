@@ -8,9 +8,10 @@ import com.github.tartaricacid.touhoulittlemaid.item.ItemFilm;
 import com.github.tartaricacid.touhoulittlemaid.util.NBTToJson;
 import com.google.common.collect.Lists;
 import com.google.gson.*;
+
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -34,7 +35,7 @@ import java.util.Objects;
 import static com.github.tartaricacid.touhoulittlemaid.init.InitItems.*;
 
 public class AltarRecipeProvider implements DataProvider {
-    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
+    // private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     protected final DataGenerator generator;
     private final List<AltarRecipe> recipes = Lists.newArrayList();
 
@@ -83,7 +84,7 @@ public class AltarRecipeProvider implements DataProvider {
             CompoundTag extraData = new CompoundTag();
             ListTag passengerList = new ListTag();
             CompoundTag passenger = new CompoundTag();
-            passenger.putString("id", Objects.requireNonNull(InitEntities.MAID.get().getRegistryName()).toString());
+            passenger.putString("id", Objects.requireNonNull(InitEntities.MAID).toString());
             passengerList.add(passenger);
             extraData.put("Passengers", passengerList);
             addEntityRecipes(InitEntities.BOX.get(), extraData, 0.5f, gemDiamond, gemLapis, ingotGold, redstone, ingotIron, coal);
@@ -117,14 +118,15 @@ public class AltarRecipeProvider implements DataProvider {
     }
 
     @Override
-    public void run(HashCache cache) throws IOException {
+    public void run(CachedOutput cache) throws IOException {
         Path path = this.generator.getOutputFolder();
         recipes.clear();
         this.registerRecipes();
         for (AltarRecipe recipe : recipes) {
             JsonObject jsonObject = recipeToJson(recipe);
             Path savePath = path.resolve("data/" + recipe.getId().getNamespace() + "/recipes/altar/" + recipe.getId().getPath() + ".json");
-            DataProvider.save(GSON, cache, jsonObject, savePath);
+            DataProvider.saveStable(cache, jsonObject, savePath);
+            // DataProvider.save(GSON, cache, jsonObject, savePath);
         }
     }
 
@@ -141,7 +143,8 @@ public class AltarRecipeProvider implements DataProvider {
     }
 
     public void addEntityRecipes(EntityType<?> entityType, @Nullable CompoundTag extraData, float powerCost, Ingredient... inputs) {
-        ResourceLocation registryName = entityType.getRegistryName();
+        ResourceLocation registryName = EntityType.getKey(entityType);
+        // ResourceLocation registryName = entityType.getRegistryName();
         if (registryName != null) {
             addEntityRecipes("spawn_" + registryName.getPath(), entityType, extraData, powerCost, inputs);
         }
@@ -166,7 +169,7 @@ public class AltarRecipeProvider implements DataProvider {
     }
 
     public void addItemRecipes(RegistryObject<Item> output, float powerCost, Ingredient... inputs) {
-        ResourceLocation registryName = output.get().getRegistryName();
+        ResourceLocation registryName = output.getId();
         if (registryName != null) {
             addItemRecipes("craft_" + registryName.getPath(), output, powerCost, inputs);
         }
@@ -181,7 +184,7 @@ public class AltarRecipeProvider implements DataProvider {
         json.addProperty("type", InitRecipes.ALTAR_CRAFTING.toString());
         {
             JsonObject output = new JsonObject();
-            ResourceLocation name = recipe.getEntityType().getRegistryName();
+            ResourceLocation name = EntityType.getKey(recipe.getEntityType());
             if (name == null) {
                 throw new JsonParseException("Entity Registry Name Not Found");
             }

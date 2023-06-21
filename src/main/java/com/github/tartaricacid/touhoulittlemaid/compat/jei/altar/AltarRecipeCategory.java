@@ -15,7 +15,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -26,7 +25,7 @@ public class AltarRecipeCategory implements IRecipeCategory<AltarRecipeWrapper> 
     public static final RecipeType<AltarRecipeWrapper> ALTAR = RecipeType.create(TouhouLittleMaid.MOD_ID, "altar", AltarRecipeWrapper.class);
     private static final ResourceLocation ALTAR_ICON = new ResourceLocation(TouhouLittleMaid.MOD_ID, "textures/gui/altar_icon.png");
     private static final ResourceLocation POWER_ICON = new ResourceLocation(TouhouLittleMaid.MOD_ID, "textures/entity/power_point.png");
-    private static final TranslatableComponent TITLE = new TranslatableComponent("jei.touhou_little_maid.altar_craft.title");
+    private static final Component TITLE = Component.translatable("jei.touhou_little_maid.altar_craft.title");
     private final IDrawableStatic bgDraw;
     private final IDrawable slotDraw;
     private final IDrawableStatic altarDraw;
@@ -74,17 +73,17 @@ public class AltarRecipeCategory implements IRecipeCategory<AltarRecipeWrapper> 
         return Collections.singletonList(ItemStack.EMPTY);
     }
 
-    @Override
-    @SuppressWarnings("removal")
-    public ResourceLocation getUid() {
-        return ALTAR.getUid();
-    }
+    // @Override
+    // @SuppressWarnings("removal")
+    // public ResourceLocation getUid() {
+    //     return ALTAR.getUid();
+    // }
 
-    @Override
-    @SuppressWarnings("removal")
-    public Class<? extends AltarRecipeWrapper> getRecipeClass() {
-        return ALTAR.getRecipeClass();
-    }
+    // @Override
+    // @SuppressWarnings("removal")
+    // public Class<? extends AltarRecipeWrapper> getRecipeClass() {
+    //     return ALTAR.getRecipeClass();
+    // }
 
     @Override
     public RecipeType<AltarRecipeWrapper> getRecipeType() {

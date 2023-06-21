@@ -26,8 +26,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
-
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public class EntityPowerPoint extends Entity implements IEntityAdditionalSpawnData {
     public static final EntityType<EntityPowerPoint> TYPE = EntityType.Builder.<EntityPowerPoint>of(EntityPowerPoint::new, MobCategory.MISC)
@@ -86,7 +85,7 @@ public class EntityPowerPoint extends Entity implements IEntityAdditionalSpawnDa
         return powerValue / 4;
     }
 
-    public static void spawnExplosionParticle(Level world, float x, float y, float z, Random rand) {
+    public static void spawnExplosionParticle(Level world, float x, float y, float z, RandomSource rand) {
         if (!world.isClientSide) {
             return;
         }

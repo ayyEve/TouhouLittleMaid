@@ -10,7 +10,6 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -37,7 +36,7 @@ public class ItemFilm extends Item {
         CompoundTag maidTag = new CompoundTag();
         maid.addAdditionalSaveData(maidTag);
         removeMaidSomeData(maidTag);
-        maidTag.putString("id", Objects.requireNonNull(InitEntities.MAID.get().getRegistryName()).toString());
+        maidTag.putString("id", Objects.requireNonNull(InitEntities.MAID).toString());
         filmTag.put(MAID_INFO, maidTag);
         film.setTag(filmTag);
         if (maid.hasCustomName()) {
@@ -87,14 +86,14 @@ public class ItemFilm extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (!hasMaidData(stack)) {
-            tooltip.add(new TranslatableComponent("tooltips.touhou_little_maid.film.no_data.desc").withStyle(ChatFormatting.DARK_RED));
+            tooltip.add(Component.translatable("tooltips.touhou_little_maid.film.no_data.desc").withStyle(ChatFormatting.DARK_RED));
         } else {
             CompoundTag maidData = getMaidData(stack);
             if (maidData.contains(EntityMaid.MODEL_ID_TAG, Tag.TAG_STRING)) {
                 String modelId = maidData.getString(EntityMaid.MODEL_ID_TAG);
                 if (StringUtils.isNotBlank(modelId)) {
                     CustomPackLoader.MAID_MODELS.getInfo(modelId).ifPresent(modelItem ->
-                            tooltip.add(new TranslatableComponent("tooltips.touhou_little_maid.photo.maid.desc",
+                            tooltip.add(Component.translatable("tooltips.touhou_little_maid.photo.maid.desc",
                                     I18n.get(ParseI18n.getI18nKey(modelItem.getName()))).withStyle(ChatFormatting.GRAY)
                             ));
                 }

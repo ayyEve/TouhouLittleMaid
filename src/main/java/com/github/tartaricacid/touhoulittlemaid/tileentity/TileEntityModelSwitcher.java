@@ -44,11 +44,11 @@ public class TileEntityModelSwitcher extends BlockEntity {
         for (ModeInfo info : infoList) {
             listTag.add(info.serialize());
         }
-        getTileData().put(INFO_LIST, listTag);
+        getPersistentData().put(INFO_LIST, listTag);
         if (this.uuid != null) {
-            getTileData().put(ENTITY_UUID, NbtUtils.createUUID(this.uuid));
+            getPersistentData().put(ENTITY_UUID, NbtUtils.createUUID(this.uuid));
         }
-        getTileData().putInt(LIST_INDEX, this.index);
+        getPersistentData().putInt(LIST_INDEX, this.index);
         super.saveAdditional(pTag);
     }
 
@@ -56,17 +56,17 @@ public class TileEntityModelSwitcher extends BlockEntity {
     public void load(CompoundTag pTag) {
         super.load(pTag);
         infoList.clear();
-        ListTag listTag = getTileData().getList(INFO_LIST, Tag.TAG_COMPOUND);
+        ListTag listTag = getPersistentData().getList(INFO_LIST, Tag.TAG_COMPOUND);
         for (int i = 0; i < listTag.size(); i++) {
             ModeInfo info = new ModeInfo();
             info.deserialize(listTag.getCompound(i));
             infoList.add(info);
         }
-        Tag uuidTag = getTileData().get(ENTITY_UUID);
+        Tag uuidTag = getPersistentData().get(ENTITY_UUID);
         if (uuidTag != null) {
             this.uuid = NbtUtils.loadUUID(uuidTag);
         }
-        this.index = getTileData().getInt(LIST_INDEX);
+        this.index = getPersistentData().getInt(LIST_INDEX);
     }
 
     @Override

@@ -18,6 +18,8 @@ import java.util.Optional;
 
 import static com.github.tartaricacid.touhoulittlemaid.item.MaidGroup.MAIN_TAB;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class ItemMaidBackpack extends Item {
     private static final Map<Integer, ItemMaidBackpack> ITEM_BY_LEVEL = Maps.newHashMap();
     private final int level;

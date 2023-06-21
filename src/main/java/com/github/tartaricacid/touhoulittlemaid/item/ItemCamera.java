@@ -8,7 +8,6 @@ import com.github.tartaricacid.touhoulittlemaid.util.MaidRayTraceHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -26,6 +25,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static com.github.tartaricacid.touhoulittlemaid.item.MaidGroup.MAIN_TAB;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ItemCamera extends Item {
     private static final String MAID_INFO = "MaidInfo";
@@ -61,7 +62,7 @@ public class ItemCamera extends Item {
         CompoundTag photoTag = new CompoundTag();
         CompoundTag maidTag = new CompoundTag();
         maid.addAdditionalSaveData(maidTag);
-        maidTag.putString("id", Objects.requireNonNull(InitEntities.MAID.get().getRegistryName()).toString());
+        maidTag.putString("id", Objects.requireNonNull(InitEntities.MAID).toString());
         photoTag.put(MAID_INFO, maidTag);
         photo.setTag(photoTag);
         if (maid.hasCustomName()) {
@@ -82,6 +83,6 @@ public class ItemCamera extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(new TranslatableComponent("tooltips.touhou_little_maid.camera.desc").withStyle(ChatFormatting.DARK_GREEN));
+        tooltip.add(Component.translatable("tooltips.touhou_little_maid.camera.desc").withStyle(ChatFormatting.DARK_GREEN));
     }
 }

@@ -28,6 +28,8 @@ import java.util.function.Predicate;
 
 import static com.github.tartaricacid.touhoulittlemaid.item.MaidGroup.MAIN_TAB;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class ItemHakureiGohei extends ProjectileWeaponItem {
     private final Multimap<Attribute, AttributeModifier> defaultModifiers;
 
