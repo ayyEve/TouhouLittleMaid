@@ -1,6 +1,4 @@
 package com.github.tartaricacid.touhoulittlemaid.client.renderer.item;
-
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -12,9 +10,11 @@ import net.minecraft.util.RandomSource;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
+
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class PerspectiveBakedModel implements BakedModel {
     private final BakedModel bakedModel2d;
@@ -61,13 +61,13 @@ public class PerspectiveBakedModel implements BakedModel {
         return ItemOverrides.EMPTY;
     }
 
-    //TODO: 
-    // @Override
-    // public BakedModel handlePerspective(ItemTransforms.TransformType type, PoseStack mat) {
-    //     if (type == ItemTransforms.TransformType.GUI || type == ItemTransforms.TransformType.FIXED) {
-    //         return bakedModel2d.handlePerspective(type, mat);
-    //     } else {
-    //         return bakedModel3d.handlePerspective(type, mat);
-    //     }
-    // }
+    @Override
+    public BakedModel applyTransform(ItemTransforms.TransformType type, com.mojang.blaze3d.vertex.PoseStack mat, boolean applyLeftHandTransform) {
+        if (type == ItemTransforms.TransformType.GUI || type == ItemTransforms.TransformType.FIXED) {
+            return bakedModel2d.applyTransform(type, mat, applyLeftHandTransform);
+        } else {
+            return bakedModel3d.applyTransform(type, mat, applyLeftHandTransform);
+        }
+    }
+
 }
