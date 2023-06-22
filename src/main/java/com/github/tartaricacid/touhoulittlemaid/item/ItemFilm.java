@@ -36,7 +36,7 @@ public class ItemFilm extends Item {
         CompoundTag maidTag = new CompoundTag();
         maid.addAdditionalSaveData(maidTag);
         removeMaidSomeData(maidTag);
-        maidTag.putString("id", Objects.requireNonNull(InitEntities.MAID).toString());
+        maidTag.putString("id", Objects.requireNonNull(InitEntities.MAID.getKey().location()).toString());
         filmTag.put(MAID_INFO, maidTag);
         film.setTag(filmTag);
         if (maid.hasCustomName()) {

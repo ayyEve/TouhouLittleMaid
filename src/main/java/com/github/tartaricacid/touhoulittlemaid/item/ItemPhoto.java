@@ -31,8 +31,6 @@ import java.util.Optional;
 
 import static com.github.tartaricacid.touhoulittlemaid.item.MaidGroup.MAIN_TAB;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class ItemPhoto extends Item {
     private static final String MAID_INFO = "MaidInfo";
 
@@ -110,9 +108,9 @@ public class ItemPhoto extends Item {
                 String modelId = maidData.getString(EntityMaid.MODEL_ID_TAG);
                 if (StringUtils.isNotBlank(modelId)) {
                     CustomPackLoader.MAID_MODELS.getInfo(modelId).ifPresent(modelItem ->
-                            tooltip.add(Component.translatable("tooltips.touhou_little_maid.photo.maid.desc",
-                                    I18n.get(ParseI18n.getI18nKey(modelItem.getName()))).withStyle(ChatFormatting.GRAY)
-                            ));
+                        tooltip.add(Component.translatable("tooltips.touhou_little_maid.photo.maid.desc",
+                            I18n.get(ParseI18n.getI18nKey(modelItem.getName()))).withStyle(ChatFormatting.GRAY)
+                        ));
                 }
             }
         }

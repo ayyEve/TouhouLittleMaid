@@ -1,23 +1,29 @@
 package com.github.tartaricacid.touhoulittlemaid.item;
 
+import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.github.tartaricacid.touhoulittlemaid.init.InitEntities;
 import com.github.tartaricacid.touhoulittlemaid.init.InitItems;
 import com.github.tartaricacid.touhoulittlemaid.init.InitSounds;
 import com.github.tartaricacid.touhoulittlemaid.util.MaidRayTraceHelper;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -62,7 +68,7 @@ public class ItemCamera extends Item {
         CompoundTag photoTag = new CompoundTag();
         CompoundTag maidTag = new CompoundTag();
         maid.addAdditionalSaveData(maidTag);
-        maidTag.putString("id", Objects.requireNonNull(InitEntities.MAID).toString());
+        maidTag.putString("id", Objects.requireNonNull(InitEntities.MAID.getKey().location()).toString());
         photoTag.put(MAID_INFO, maidTag);
         photo.setTag(photoTag);
         if (maid.hasCustomName()) {
