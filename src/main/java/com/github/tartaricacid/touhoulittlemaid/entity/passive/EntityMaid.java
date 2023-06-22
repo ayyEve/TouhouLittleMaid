@@ -30,14 +30,12 @@ import com.github.tartaricacid.touhoulittlemaid.util.BiomeCacheUtil;
 import com.github.tartaricacid.touhoulittlemaid.util.ItemsUtil;
 import com.github.tartaricacid.touhoulittlemaid.util.ParseI18n;
 import com.mojang.serialization.Dynamic;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -141,7 +139,6 @@ public class EntityMaid extends TamableAnimal implements MenuProvider, CrossbowA
     private static final String FAVORABILITY_TAG = "MaidFavorability";
     private static final String SCHEDULE_MODE_TAG = "MaidScheduleMode";
     private static final String RESTRICT_CENTER_TAG = "MaidRestrictCenter";
-
     private static final String DEFAULT_MODEL_ID = "touhou_little_maid:hakurei_reimu";
 
     private final EntityArmorInvWrapper armorInvWrapper = new EntityArmorInvWrapper(this);

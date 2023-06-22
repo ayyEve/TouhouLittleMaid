@@ -7,7 +7,6 @@ import com.github.tartaricacid.touhoulittlemaid.entity.task.TaskManager;
 import com.github.tartaricacid.touhoulittlemaid.init.*;
 import com.github.tartaricacid.touhoulittlemaid.init.registry.CommandRegistry;
 import com.github.tartaricacid.touhoulittlemaid.init.registry.MobSpawnInfoRegistry;
-import com.github.tartaricacid.touhoulittlemaid.item.bauble.BaubleManager;
 import com.github.tartaricacid.touhoulittlemaid.loot.AdditionLootModifier;
 import com.github.tartaricacid.touhoulittlemaid.util.AnnotatedInstanceUtil;
 import com.google.common.collect.Lists;
@@ -40,22 +39,15 @@ public final class TouhouLittleMaid {
         
         InitRecipes.RECIPE_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
         InitRecipes.RECIPES.register(FMLJavaModLoadingContext.get().getModEventBus());
-        
-        // TouhouLittleMaid.LOGGER.info("test");
         CommandRegistry.ARGUMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
-
         MobSpawnInfoRegistry.BIOME_MODIFIER_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
-
         InitEntities.DATA_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
         AdditionLootModifier.LOOT_SERIALIZER.register(FMLJavaModLoadingContext.get().getModEventBus());
-        // InitLootModifier.GLOBAL_LOOT_MODIFIER_SERIALIZER.register(FMLJavaModLoadingContext.get().getModEventBus());
-
 
         InitTrigger.init();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GeneralConfig.init());
         EXTENSIONS = AnnotatedInstanceUtil.getModExtensions();
         TaskManager.init();
-        // BaubleManager.init();
         MultiBlockManager.init();
     }
 }

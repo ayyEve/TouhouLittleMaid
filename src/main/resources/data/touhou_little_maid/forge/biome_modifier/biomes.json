@@ -1,0 +1,7 @@
+{
+    "type": "touhou_little_maid:biomes",
+    "features": "touhou_little_maid:add_fairy",
+    "biomes": "#minecraft:is_nether",
+    "biomes2": "#minecraft:is_end",
+    "biomes3": "minecraft:mushroom_fields"
+}

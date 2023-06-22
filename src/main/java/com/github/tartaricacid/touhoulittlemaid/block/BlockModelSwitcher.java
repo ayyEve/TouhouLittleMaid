@@ -85,7 +85,6 @@ public class BlockModelSwitcher extends BaseEntityBlock {
         if (modelInfo != null) {
             maid.setModelId(modelInfo.getModelId().toString());
             if (StringUtils.isNotBlank(modelInfo.getText())) {
-                //TODO: this was a TextComponent before
                 maid.setCustomName(Component.literal(modelInfo.getText()));
                 maid.setCustomNameVisible(true);
             } else {
