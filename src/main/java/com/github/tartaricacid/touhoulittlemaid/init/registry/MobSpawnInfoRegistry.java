@@ -18,7 +18,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 // TODO: 2021/10/17 添加配置文件，管控可生成的生物群系
-// TODO: add the biomes to the json whatever: https://forge.gemwire.uk/wiki/Biome_Modifiers
 public class MobSpawnInfoRegistry {
     public static DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, TouhouLittleMaid.MOD_ID);
     static RegistryObject<Codec<MobSpawnInfo>> CODEC = BIOME_MODIFIER_SERIALIZERS.register("biomes", () -> RecordCodecBuilder.create(builder -> builder.group(

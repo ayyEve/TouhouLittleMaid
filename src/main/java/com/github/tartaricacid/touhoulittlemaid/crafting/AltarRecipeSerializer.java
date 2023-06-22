@@ -1,7 +1,4 @@
 package com.github.tartaricacid.touhoulittlemaid.crafting;
-
-import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
-import com.github.tartaricacid.touhoulittlemaid.command.arguments.HandleTypeArgument;
 import com.github.tartaricacid.touhoulittlemaid.util.EntityCraftingHelper;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
@@ -15,16 +12,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-
 import org.apache.commons.lang3.StringUtils;
-
-import net.minecraft.commands.synchronization.ArgumentTypeInfo;
-import net.minecraft.commands.synchronization.ArgumentTypeInfos;
-import net.minecraft.core.Registry;
-
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;

@@ -68,7 +68,7 @@ public class BlockGarageKit extends Block implements EntityBlock {
         for (String modelId : CustomPackLoader.MAID_MODELS.getModelIdSet()) {
             ItemStack stack = new ItemStack(InitBlocks.GARAGE_KIT.get());
             CompoundTag data = stack.getOrCreateTagElement(ENTITY_INFO);
-            data.putString("id", Objects.requireNonNull(InitEntities.MAID).toString());
+            data.putString("id", Objects.requireNonNull(InitEntities.MAID.getKey().location()).toString());
             data.putString(EntityMaid.MODEL_ID_TAG, modelId);
             items.add(stack);
         }

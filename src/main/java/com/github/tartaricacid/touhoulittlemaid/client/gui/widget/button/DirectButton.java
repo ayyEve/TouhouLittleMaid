@@ -4,8 +4,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 
-import net.minecraft.client.gui.components.Button.OnPress;
-
 public class DirectButton extends Button {
     private Direction direction = Direction.SOUTH;
 
